@@ -3,6 +3,9 @@ import FormikTextInput from './FormikTextInput';
 import { Formik } from 'formik';
 import theme from '../theme';
 import * as yup from 'yup';
+import useSignIn from '../hooks/useSignIn';
+import useAuthStorage from '../hooks/useAuthStorage';
+import { useNavigate } from 'react-router-native';
 
 const initialValues = {
     username: '',
@@ -43,8 +46,21 @@ const SignInForm = ({ onSubmit }) => {
 };
 
 const SignIn = () => {
-    const handleSignIn = values => {
+    const authStorage = useAuthStorage();
+    const [signIn] = useSignIn();
+    const navigate = useNavigate();
+
+    const handleSignIn = async (values) => {
+        const { username, password } = values;
         console.log(values);
+        try {
+            await signIn({ username: username, password: password });  
+            const token = await authStorage.getAccessToken();
+            console.log('this is a token:',token);
+            navigate('/');
+        } catch (error) {
+            console.log(error);
+        }
     }
 
   return (
