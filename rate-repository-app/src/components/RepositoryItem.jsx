@@ -1,8 +1,9 @@
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import theme from '../theme';
 import RepositoryItemStat from './RepositoryItemStat';
+import * as Linking from 'expo-linking';
 
-const RepositoryItem = ({ item }) => {
+const RepositoryItem = ({ item, repoDetails }) => {
     const statisticsStyle = StyleSheet.create({
         container: {
             flexDirection: 'row',
@@ -66,8 +67,28 @@ const RepositoryItem = ({ item }) => {
         }
     });
 
+    const githubBtn = StyleSheet.create({
+        container: {
+            flexDirection: 'row',
+            justifyContent: 'center',
+            marginTop: 15,
+        },
+        btn: {
+            backgroundColor: theme.colors.primary,
+            padding: 10,
+            width: '100%',
+            textAlign: 'center',
+            borderRadius: 5
+        },
+        btnText: {
+            color: theme.colors.white,
+            textAlign: 'center',
+            fontWeight: theme.fontWeights.bold
+        }
+    });
+
     return (
-        <View style={repoItem.container}>
+        <View style={repoItem.container} testID='repositoryItem'>
             <View style={repoItem.infoContainer}>
                 <View>
                     <Image
@@ -84,11 +105,18 @@ const RepositoryItem = ({ item }) => {
                 </View>
             </View>
             <View style={statisticsStyle.container}>
-                <RepositoryItemStat textStyle={textStyle} itemStat={item.stargazersCount} />
-                <RepositoryItemStat textStyle={textStyle} itemStat={item.forksCount} />
-                <RepositoryItemStat textStyle={textStyle} itemStat={item.reviewCount} />
-                <RepositoryItemStat textStyle={textStyle} itemStat={item.ratingAverage} />
+                <RepositoryItemStat textStyle={textStyle} itemStat={item.stargazersCount} text='Stars' />
+                <RepositoryItemStat textStyle={textStyle} itemStat={item.forksCount} text='Forks' />
+                <RepositoryItemStat textStyle={textStyle} itemStat={item.reviewCount} text='Review' />
+                <RepositoryItemStat textStyle={textStyle} itemStat={item.ratingAverage} text='Rating' />
             </View>
+            {repoDetails && (
+                <View style={githubBtn.container}>
+                    <Pressable onPress={() => Linking.openURL(`${item.url}`)} style={githubBtn.btn}>
+                        <Text style={githubBtn.btnText}>Open in GitHub</Text>
+                    </Pressable>
+                </View>
+            )}
         </View>
     )
 }

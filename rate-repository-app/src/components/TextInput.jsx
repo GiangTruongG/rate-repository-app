@@ -1,9 +1,9 @@
 import { TextInput as NativeTextInput } from "react-native";
 
-const TextInput = ({ placeholder, name, ...props }) => {
+const TextInput = ({ placeholder, type, ...props }) => {
 
 
-    return <NativeTextInput secureTextEntry={name === 'password' && true} placeholder={placeholder} {...props} />
+    return <NativeTextInput secureTextEntry={type === 'password' && true} placeholder={placeholder} {...props} />
 };
 
 export default TextInput;

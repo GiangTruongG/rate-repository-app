@@ -37,7 +37,7 @@ const SignInForm = ({ onSubmit }) => {
     return (
         <View style={styles.container}>
             <FormikTextInput name="username" placeholder="username" />
-            <FormikTextInput name="password" placeholder="password" />
+            <FormikTextInput type='password' name="password" placeholder="password" />
             <Pressable style={styles.btn} onPress={onSubmit}>
                 <Text style={styles.btnText}>Sign In</Text>
             </Pressable>
@@ -45,9 +45,7 @@ const SignInForm = ({ onSubmit }) => {
     )
 };
 
-const SignIn = () => {
-    const authStorage = useAuthStorage();
-    const [signIn] = useSignIn();
+export const SignInFormContainer = ({ signIn, authStorage }) => {
     const navigate = useNavigate();
 
     const handleSignIn = async (values) => {
@@ -72,6 +70,13 @@ const SignIn = () => {
         {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
     </Formik>
   )
+}
+
+const SignIn = () => {
+    const authStorage = useAuthStorage();
+    const [ signIn ] = useSignIn();
+    
+    return <SignInFormContainer signIn={signIn} authStorage={authStorage} />
 };
 
 export default SignIn;

@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native';
 
-const RepositoryItemStat = ({ textStyle, itemStat }) => {
+const RepositoryItemStat = ({ textStyle, itemStat, text }) => {
 
     const convertNumber = (numb) => {
         if (numb > 1000) {
@@ -16,7 +16,7 @@ const RepositoryItemStat = ({ textStyle, itemStat }) => {
     return (
         <View>
             <Text style={textStyle.textBig}>{convertNumber(itemStat)}</Text>
-            <Text style={textStyle.textSmall}>Stars</Text>
+            <Text style={textStyle.textSmall}>{text}</Text>
         </View>
     )
 }
